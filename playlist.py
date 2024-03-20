@@ -4,7 +4,7 @@ from spotipy.oauth2 import SpotifyOAuth
 def get_favorite_tracks(sp):
     tracks = []
     results = sp.current_user_saved_tracks()
-    
+
     while True:
         for item in results['items']:
             tracks.append(item['track'])
@@ -42,8 +42,7 @@ def get_playlists(sp):
     
 def get_playlist_tracks(sp, playlist_id):
     playlist_tracks = []
-    results = sp.playlist(playlist_id=playlist_id, fields="tracks.items(track(id)),tracks.next")
-    results = results['tracks']
+    results = sp.playlist_items(playlist_id=playlist_id, fields="items(track(id)),next")
     
     while True:
         for item in results['items']:
@@ -138,8 +137,7 @@ def main():
     for i in range(0, len(obsolete_tracks_ids), track_post_limit):
         remove_playlist_tracks(sp, playlist_id, obsolete_tracks_ids[i:i+track_post_limit])
         
-    print('All done, have fun!')
-
+    input("Press Enter to continue...")
 
 
 if __name__ == '__main__':
